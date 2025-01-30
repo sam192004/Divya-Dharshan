@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divya Dharshan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    text-align: center;
+    background-color: #121212; /* Dark theme background */
+}
+
+/* Video Background */
+.video-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Slightly darker overlay */
+    z-index: -1;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid #4caf50;
+    padding: 10px 20px;
+}
+
+.navbar .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #ffffff;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.navbar .title:hover {
+    color: #00ff7f;
+    transform: scale(1.1);
+}
+
+.navbar .menu {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .menu a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s, transform 0.2s;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.navbar .menu a:hover {
+    color: #4caf50;
+    background: rgba(76, 175, 80, 0.1);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .navbar .menu {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+}
+
+/* Button Styles */
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.button {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #4caf50, #022403);
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.button:hover {
+    background: linear-gradient(135deg, #56d364, #005f20);
+    transform: translateY(-3px);
+}
+
+/* Search Bar Styles */
+.search-bar {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    padding: 12px 20px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 18px;
+    width: 300px;
+    transition: border-color 0.3s;
+}
+
+.search-bar input:focus {
+    border-color: #4caf50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Temple List Styles */
+#templeList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.temple-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.temple {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    padding: 20px;
+    width: calc(100% / 2 - 20px);
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.temple:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.temple img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.temple h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.temple p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Book Ride Button */
+#bookRideButton {
+    padding: 12px 40px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #ff4500; /* Vibrant orange */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#bookRideButton:hover {
+    background-color: #e63900;
+    transform: translateY(-3px);
+}
+
+#weatherWidget {
+    background: linear-gradient(145deg, #ffeb3b, #ffc107);
+    border-radius: 10px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), inset 0 0 5px rgba(255, 255, 255, 0.4);
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 200px;
+
+}
+
+#weatherWidget h3 {
+    font-size: 1rem;
+    color: #37474f;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#weatherWidget p {
+    font-size: 0.8rem;
+    color: #212121;
+    margin: 0;
+    line-height: 1.2;
+}
+
+#weatherWidget button {
+    background: #0408eb;
+    color: #ffffff;
+    border: none;
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-top: 5px;
+}
+
+#weatherWidget button:hover {
+    background: #e65100;
+    transform: scale(1.1);
+}
+
+ </style>
+    <script type="module" src="https://unpkg .com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+    <!-- Video background -->
+    <video autoplay muted loop class="video-bg">
+        <source src="DIVYA DHARSHAN.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <!-- Overlay for better readability -->
+    <div class="overlay"></div>
+    <!-- Navbar -->
+<div class="navbar">
+    <div class="center">
+     <div class="title" onclick="showMainPage()">Divya Dharshan</div>
+    </div>
+    <div class="menu">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchTemple()">
+            <button id="bookRideButton" onclick="bookRide()">Book Ride</button>
+            </div>
+        </div>
+        <div id="weatherWidget">
+            <h3>Weather Updates</h3>
+            <p id="weatherInfo">Loading...</p>
+        </div>
+        
+    </div>
+</div>
+    <!-- Home page content -->
+    <div id="homePageContent"></div>
+    <!-- Temple list -->
+    <div id="templeList">
+        <div class="temple-container">
+            <div class="temple" id="temple1">
+                <img src="meenakshi.jpg" alt="Meenakshi Amman Temple">
+                <h3>Meenakshi Amman Temple</h3>
+                <p><strong>Location:</strong> Madurai, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> The Meenakshi Amman Temple is an ancient and iconic Hindu temple dedicated to Goddess Meenakshi, an incarnation of Parvati, and Lord Sundareswarar, an incarnation of Shiva.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Meenakshi Amman Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Meenakshi Amman Temple', 'Madurai, Tamil Nadu, India', 'Renowned for its architecture and cultural heritage.')">Share</button>
+                    <button class="button" onclick="locateHotels('Meenakshi Amman Temple')">Accommodation</button>
+                </div>
+            </div> 
+
+            <div class="temple" id="temple2">
+                <img src="tanjore.png" alt="Thanjavur Temple">
+                <h3>Thanjavur Temple</h3>
+                <p><strong>Location:</strong> Thanjavur, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> The Brihadeeswarar Temple, a UNESCO World Heritage Site, is a masterpiece of Chola architecture dedicated to Lord Shiva.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Thanjavur Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Thanjavur Temple', 'Thanjavur, Tamil Nadu, India', 'Known for Chola architecture.')">Share</button>
+                    <button class="button" onclick="locateHotels('Thanjavur Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple3">
+                <img src="maruthamalai.jpg" alt="Marudhamalai Temple">
+                <h3>Marudhamalai Temple</h3>
+                <p><strong>Location:</strong> Coimbatore, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> The Marudhamalai Temple is dedicated to Lord Murugan, situated on the Marudhamalai Hills, known for its scenic beauty and spiritual significance.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Marudhamalai Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Marudhamalai Temple', 'Coimbatore, Tamil Nadu, India', 'Dedicated to Lord Murugan.')">Share</button>
+                    <button class="button" onclick="locateHotels('Marudhamalai Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple4">
+                <img src="kanyakumari.jpg" alt="Kanyakumari Temple">
+                <h3>Kanyakumari Temple</h3>
+                <p><strong>Location:</strong> Kanyakumari, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> The Kanyakumari Temple is dedicated to Goddess Kanyakumari, known for its stunning views of the sunrise and sunset.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Kanyakumari Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Kanyakumari Temple', 'Kanyakumari, Tamil Nadu, India', 'Famous for its scenic beauty.')">Share</button>
+                    <button class="button" onclick="locateHotels('Kanyakumari Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple5">
+                <img src="rameshwaram.jpg" alt="Rameshwaram Temple">
+                <h3>Rameshwaram Temple</h3>
+                <p><strong>Location:</strong> Rameshwaram, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> The Rameshwaram Temple is one of the Char Dham pilgrimage sites, dedicated to Lord Shiva.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Rameshwaram Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Rameshwaram Temple', 'Rameshwaram, Tamil Nadu, India', 'A significant pilgrimage site.')">Share</button>
+                    <button class="button" onclick="locateHotels('Rameshwaram Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple6">
+                <img src="kashi.jpg" alt="Kashi Vishwanath Temple">
+                <h3>Kashi Vishwanath Temple</h3>
+                <p><strong>Location:</strong> Varanasi, Uttar Pradesh, India</p>
+                <p><strong>Historical Significance:</strong> One of the holiest Shiva temples, located on the banks of the River Ganges.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Kashi Vishwanath Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Kashi Vishwanath Temple', 'Varanasi, Uttar Pradesh, India', 'A revered Shiva temple.')">Share</button>
+                    <button class="button" onclick="locateHotels ('Kashi Vishwanath Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple7">
+                <img src="adikumbeswarar.jpg" alt="Adi Kumbeswarar Temple">
+                <h3>Adi Kumbeswarar Temple</h3>
+                <p><strong>Location:</strong> Kumbakonam, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> An ancient temple dedicated to Lord Shiva, known for its architectural beauty.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Adi Kumbeswarar Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Adi Kumbeswarar Temple', 'Kumbakonam, Tamil Nadu, India', 'An ancient temple known for its beauty and significance.')">Share</button>
+                    <button class="button" onclick="locateHotels('Adi Kumbeswarar Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple8">
+                <img src="mylapore.jpg" alt="Mylapore Temple">
+                <h3>Mylapore Temple</h3>
+                <p><strong>Location:</strong> Chennai, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A historic temple known for its rich cultural heritage and vibrant festivals.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Mylapore Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Mylapore Temple', 'Chennai, Tamil Nadu, India', 'Known for its cultural heritage and festivals.')">Share</button>
+                    <button class="button" onclick="locateHotels('Mylapore Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple9">
+                <img src="rajagopalaswamy.jpg" alt="Rajagopalaswamy Temple">
+                <h3>Rajagopalaswamy Temple</h3>
+                <p><strong>Location:</strong> Mannargudi, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A prominent temple dedicated to Lord Krishna, famous for its architecture and festivals.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Rajagopalaswamy Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Rajagopalaswamy Temple', 'Mannargudi, Tamil Nadu, India', 'Famous for its architecture and vibrant festivals.')">Share</button>
+                    <button class="button" onclick="locateHotels('Rajagopalaswamy Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple10">
+                <img src="srivilliputhur.jpg" alt="Srivilliputhur Andal Temple">
+                <h3>Srivilliputhur Andal Temple</h3>
+                <p><strong>Location:</strong> Srivilliputhur, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A famous temple dedicated to Goddess Andal, known for its beautiful architecture and festivals.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Srivilliputhur Andal Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Srivilliputhur Andal Temple', 'Srivilliputhur, Tamil Nadu, India', 'Known for its beautiful architecture and cultural significance.')">Share</button>
+                    <button class="button" onclick="locateHotels('Srivilliputhur Andal Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple11">
+                <img src="thiruparankundram.jpg" alt="Thiruparankundram Murugan Temple">
+                <h3>Thiruparankundram Murugan Temple</h3>
+                <p><strong>Location:</strong> Thiruparankundram, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A significant temple dedicated to Lord Murugan, known for its rock-cut architecture and spiritual importance.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Thiruparankundram Murugan Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Thiruparankundram Murugan Temple', 'Thiruparankundram, Tamil Nadu, India', 'Known for its rock-cut architecture and spiritual significance.')">Share</button>
+                    <button class="button" onclick="bookDarshan('Thiruparankundram Murugan Temple')">Book Darshan</button>
+                    <button class="button" onclick="locateHotels('Thiruparankundram Murugan Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple12">
+                <img src="natarajar.jpg" alt="Natarajar Temple">
+                <h3>Natarajar Temple</h3>
+                <p><strong>Location:</strong> Chidambaram, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A renowned temple dedicated to Lord Shiva in his Nataraja form, famous for its dance festival.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Natarajar Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Natarajar Temple', 'Chidambaram, Tamil Nadu, India', 'Famous for its dance festival and architecture.')">Share</button>
+                    <button class="button" onclick="locateHotels('Natarajar Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple13">
+                <img src="tirupati.jpg" alt="Tirupati Temple">
+                <h3>Tirupati Temple</h3>
+                <p><strong>Location:</strong> Tirupati, Andhra Pradesh, India</p>
+                <p><strong>Historical Significance:</strong> A famous temple dedicated to Lord Venkateswara, attracting millions of devotees annually.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Tirupati Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Tirupati Temple', 'Tirupati , Andhra Pradesh, India', 'A famous pilgrimage site.')">Share</button>
+                    <button class="button" onclick="locateHotels('Tirupati Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple14">
+                <img src="marundeeswarar.jpg" alt="Marundeeswarar Temple">
+                <h3>Marundeeswarar Temple</h3>
+                <p><strong>Location:</strong> Thiruvanmiyur, Chennai, India</p>
+                <p><strong>Historical Significance:</strong> Dedicated to Lord Shiva, known for its healing powers.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Marundeeswarar Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Marundeeswarar Temple', 'Thiruvanmiyur, Chennai, India', 'A revered Shiva temple known for healing.')">Share</button>
+                    <button class="button" onclick="locateHotels('Marundeeswarar Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple15">
+                <img src="patteswaram.jpg" alt="Patteswaram Temple">
+                <h3>Patteswaram Temple</h3>
+                <p><strong>Location:</strong> Patteswaram, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> An ancient temple dedicated to Lord Shiva, known for its architecture.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Patteswaram Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Patteswaram Temple', 'Patteswaram, Tamil Nadu, India', 'An ancient Shiva temple with beautiful architecture.')">Share</button>
+                    <button class="button" onclick="locateHotels('Patteswaram Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple16">
+                <img src="rockfort.jpg" alt="Rock Fort Temple">
+                <h3>Rock Fort Temple</h3>
+                <p><strong>Location:</strong> Trichy, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> Famous for its rock-cut architecture and panoramic views.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Rock Fort Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Rock Fort Temple', 'Trichy, Tamil Nadu, India', 'Known for its rock-cut architecture and views.')">Share</button>
+                    <button class="button" onclick="locateHotels('Rock Fort Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple17">
+                <img src="thiruvannamalai.jpg" alt="Arulmigu Arunachaleswarar Temple">
+                <h3>Arulmigu Arunachaleswarar Temple</h3>
+                <p><strong>Location:</strong> Tiruvann amalai, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> One of the largest Shiva temples, famous for its annual Karthigai Deepam festival.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Arulmigu Arunachaleswarar Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Arulmigu Arunachaleswarar Temple', 'Tiruvannamalai, Tamil Nadu, India', 'Famous for its grand architecture and festivals.')">Share</button>
+                    <button class="button" onclick="locateHotels('Arulmigu Arunachaleswarar Temple')">Accommodation</button>
+                </div>
+            </div>
+            
+            <div class="temple" id="temple18">
+                <img src="thillaikali.jpg" alt="Thillai Kali Temple">
+                <h3>Thillai Kali Temple</h3>
+                <p><strong>Location:</strong> Chidambaram, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A significant temple dedicated to Goddess Kali, known for its unique architecture.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Thillai Kali Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Thillai Kali Temple', 'Chidambaram, Tamil Nadu, India', 'Known for its unique architecture and cultural significance.')">Share</button>
+                    <button class="button" onclick="locateHotels('Thillai Kali Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple19">
+                <img src="shoretemple.jpg" alt="Mahabalipuram Shore Temple">
+                <h3>Mahabalipuram Shore Temple</h3>
+                <p><strong>Location:</strong> Mahabalipuram, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A UNESCO World Heritage Site, known for its stunning architecture and coastal views.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Mahabalipuram Shore Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Mahabalipuram Shore Temple', 'Mahabalipuram, Tamil Nadu, India', 'A UNESCO World Heritage Site with stunning architecture.')">Share</button>
+                    <button class="button" onclick="locateHotels('Mahabalipuram Shore Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple20">
+                <img src="Avinashi-Temple.jpg" alt="Avinashi Lingeshwarar Temple">
+                <h3>Avinashi Lingeshwarar Temple</h3>
+                <p><strong>Location:</strong> Avinasi, Tiruppur District, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A revered Shiva temple known for its rich history and association with the Tamil saint Sundarar.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Avinashi Lingeshwarar Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Avinashi Lingeshwarar Temple', 'Avinasi, Tiruppur District, Tamil Nadu, India', 'A significant temple dedicated to Lord Shiva.')">Share</button>
+                    <button class="button" onclick="locateHotels('Avinashi Lingeshwarar Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple21">
+                    <img src="Somnathtemple.jpg" alt="Somnath Temple">
+                    <h3>Somnath Temple</h3>
+                    <p><strong>Location:</strong> Prabhas Patan, Gujarat, India</p>
+                    <p><strong>Historical Significance:</strong> One of the 12 Jyotirlingas of Lord Shiva, known for its resilience and history.</p>
+                    <div class="button-container">
+                        <button class="button" onclick="locateTemple('Somnath Temple')">Locate Temple</button>
+                        <button class="button" onclick="shareTemple('Somnath Temple', 'Prabhas Patan, Gujarat, India', 'A prominent Jyotirlinga temple dedicated to Lord Shiva.')">Share</button>
+                        <button class="button" onclick="locateHotels('Somnath Temple')">Accommodation</button>
+                    </div>
+            </div>
+
+            <div class="temple" id="temple22">
+                <img src="Srirangam.jpg" alt="Sri Ranganathaswamy Temple">
+                <h3>Sri Ranganathaswamy Temple</h3>
+                <p><strong>Location:</strong> Srirangam, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> The largest functioning Hindu temple in the world, dedicated to Lord Vishnu as Ranganatha.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Sri Ranganathaswamy Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Sri Ranganathaswamy Temple', 'Srirangam, Tamil Nadu, India', 'The largest functioning Hindu temple dedicated to Lord Ranganatha.')">Share</button>
+                    <button class="button" onclick="locateHotels('Sri Ranganathaswamy Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple23">
+                    <img src="Palani.jpg" alt="Palani Murugan Temple">
+                    <h3>Palani Murugan Temple</h3>
+                    <p><strong>Location:</strong> Palani, Tamil Nadu, India</p>
+                    <p><strong>Historical Significance:</strong> One of the six abodes of Lord Murugan, situated on a hill.</p>
+                    <div class="button-container">
+                        <button class="button" onclick="locateTemple('Palani Murugan Temple')">Locate Temple</button>
+                        <button class="button" onclick="shareTemple('Palani Murugan Temple', 'Palani, Tamil Nadu, India', 'A sacred temple dedicated to Lord Murugan.')">Share</button>
+                        <button class="button" onclick="locateHotels('Palani Murugan Temple')">Accommodation</button>
+                    </div>
+            </div>
+
+            <div class="temple" id="temple24">
+                    <img src="Swamimalai.jpg" alt="Swamimalai Murugan Temple">
+                    <h3>Swamimalai Murugan Temple</h3>
+                    <p><strong>Location:</strong> Swamimalai, Tamil Nadu, India</p>
+                    <p><strong>Historical Significance:</strong> One of the six abodes of Lord Murugan, known for its unique steps representing wisdom.</p>
+                    <div class="button-container">
+                        <button class="button" onclick="locateTemple('Swamimalai Murugan Temple')">Locate Temple</button>
+                        <button class="button" onclick="shareTemple('Swamimalai Murugan Temple', 'Swamimalai, Tamil Nadu, India', 'A sacred temple for Lord Murugan known for its wisdom steps.')">Share</button>
+                        <button class="button" onclick="locateHotels('Swamimalai Murugan Temple')">Accommodation</button>
+                    </div>
+            </div>
+            
+            <div class="temple" id="temple25">
+                    <img src="Alagartemple.jpg" alt="Alagar Temple">
+                    <h3>Alagar Temple</h3>
+                    <p><strong>Location:</strong> Alagar Kovil, Tamil Nadu, India</p>
+                    <p><strong>Historical Significance:</strong> A Vishnu temple known for its sacred springs and festival celebrations.</p>
+                    <div class="button-container">
+                        <button class="button" onclick="locateTemple('Alagar Temple')">Locate Temple</button>
+                        <button class="button" onclick="shareTemple('Alagar Temple', 'Alagar Kovil, Tamil Nadu, India', 'A revered Vishnu temple.')">Share</button>
+                        <button class="button" onclick="locateHotels('Alagar Temple')">Accommodation</button>
+                    </div>
+            </div>
+
+            <div class="temple" id="temple26">
+            <img src="adiyogi.jpg" alt="Adiyogi Shiva Statue">
+            <h3>Adiyogi Shiva Statue</h3>
+            <p><strong>Location:</strong> Coimbatore, Tamil Nadu, India</p>
+            <p><strong>Historical Significance:</strong> The world's largest bust statue dedicated to Lord Shiva, symbolizing yoga and meditation.</p>
+            <div class="button-container">
+                <button class="button" onclick="locateTemple('Adiyogi Shiva Statue')">Locate Temple</button>
+                <button class="button" onclick="shareTemple('Adiyogi Shiva Statue', 'Coimbatore, Tamil Nadu, India', 'A spiritual landmark for yoga enthusiasts.')">Share</button>
+                <button class="button" onclick="locateHotels('Adiyogi Shiva Statue')">Accommodation</button>
+            </div>
+            </div>
+
+            <div class="temple" id="temple27">
+            <img src="velliangiri.jpg" alt="Velliangiri Hill Temple">
+            <h3>Velliangiri Hill Temple</h3>
+            <p><strong>Location:</strong> Velliangiri Hills, Coimbatore, Tamil Nadu, India</p>
+            <p><strong>Historical Significance:</strong> Known as the 'Kailash of the South', this temple is a sacred spot for Lord Shiva devotees.</p>
+            <div class="button-container">
+                <button class="button" onclick="locateTemple('Velliangiri Hill Temple')">Locate Temple</button>
+                <button class="button" onclick="shareTemple('Velliangiri Hill Temple', 'Velliangiri Hills, Coimbatore, Tamil Nadu, India', 'A sacred pilgrimage site for Shiva devotees.')">Share</button>
+                <button class="button" onclick="locateHotels('Velliangiri Hill Temple')">Accommodation</button>
+            </div>
+            </div>
+
+            <div class="temple" id="temple28">
+            <img src="eachanari.jpg" alt="Eachanari Vinayagar Temple">
+            <h3>Eachanari Vinayagar Temple</h3>
+            <p><strong>Location:</strong> Eachanari, Coimbatore, Tamil Nadu, India</p>
+            <p><strong>Historical Significance:</strong> A famous temple dedicated to Lord Ganesha, revered for its large deity idol.</p>
+            <div class="button-container">
+                <button class="button" onclick="locateTemple('Eachanari Vinayagar Temple')">Locate Temple</button>
+                <button class="button" onclick="shareTemple('Eachanari Vinayagar Temple', 'Eachanari, Coimbatore, Tamil Nadu, India', 'A renowned temple for Lord Ganesha worship.')">Share</button>
+                <button class="button" onclick="locateHotels('Eachanari Vinayagar Temple')">Accommodation</button>
+            </div>
+            </div>
+
+            <div class="temple" id="temple29">
+            <img src="iskcon_temple.jpg" alt="ISKCON Temple">
+            <h3>ISKCON Temple</h3>
+            <p><strong>Location:</strong> Coimbatore, Tamil Nadu, India</p>
+            <p><strong>Historical Significance:</strong> A spiritual center dedicated to Lord Krishna, promoting peace and devotion.</p>
+            <div class="button-container">
+                <button class="button" onclick="locateTemple('ISKCON Temple')">Locate Temple</button>
+                <button class="button" onclick="shareTemple('ISKCON Temple', 'Coimbatore, Tamil Nadu, India', 'A serene Krishna temple promoting spirituality.')">Share</button>
+                <button class="button" onclick="locateHotels('ISKCON Temple')">Accommodation</button>
+            </div>
+            </div>
+
+            <div class="temple" id="temple30">
+            <img src="koniamman_temple.jpg" alt="Arulmigu Koniamman Temple">
+            <h3>Arulmigu Koniamman Temple</h3>
+            <p><strong>Location:</strong> Coimbatore, Tamil Nadu, India</p>
+            <p><strong>Historical Significance:</strong> A divine temple dedicated to Goddess Koniamman, believed to be the guardian deity of Coimbatore.</p>
+            <div class="button-container">
+                <button class="button" onclick="locateTemple('Arulmigu Koniamman Temple')">Locate Temple</button>
+                <button class="button" onclick="shareTemple('Arulmigu Koniamman Temple', 'Coimbatore, Tamil Nadu, India', 'A temple for the guardian deity of Coimbatore.')">Share</button>
+                <button class="button" onclick="locateHotels('Arulmigu Koniamman Temple')">Accommodation</button>
+            </div>
+            </div>
+
+            <div class="temple" id="temple31">
+            <img src="thirumoorthy_temple.jpg" alt="Thirumoorthy Malai Temple">
+            <h3>Thirumoorthy Malai Temple</h3>
+            <p><strong>Location:</strong> Thirumoorthy Hills, Coimbatore, Tamil Nadu, India</p>
+            <p><strong>Historical Significance:</strong> A picturesque temple located near a dam and waterfalls, offering spiritual and natural beauty.</p>
+            <div class="button-container">
+                <button class="button" onclick="locateTemple('Thirumoorthy Malai Temple')">Locate Temple</button>
+                <button class="button" onclick="shareTemple('Thirumoorthy Malai Temple', 'Thirumoorthy Hills, Coimbatore, Tamil Nadu, India', 'A serene temple surrounded by nature.')">Share</button>
+                <button class="button" onclick="locateHotels('Thirumoorthy Malai Temple')">Accommodation</button>
+            </div>
+            </div>
+    
+            <div class="temple" id="temple32">
+                <img src="sarangapani_temple.jpg" alt="Sarangapani Temple">
+                <h3>Sarangapani Temple</h3>
+                <p><strong>Location:</strong> Kumbakonam, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A Vaishnavite temple dedicated to Lord Vishnu, known for its majestic architecture and sculptural beauty.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Sarangapani Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Sarangapani Temple', 'Kumbakonam, Tamil Nadu, India', 'A revered temple for Vishnu devotees.')">Share</button>
+                    <button class="button" onclick="locateHotels('Sarangapani Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple33">
+                <img src="airavatesvara_temple.jpg" alt="Airavatesvara Temple">
+                <h3>Airavatesvara Temple</h3>
+                <p><strong>Location:</strong> Darasuram, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A UNESCO World Heritage Site, this Chola-era temple is renowned for its intricate carvings and architecture.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Airavatesvara Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Airavatesvara Temple', 'Darasuram, Tamil Nadu, India', 'A UNESCO site showcasing exquisite Chola art.')">Share</button>
+                    <button class="button" onclick="locateHotels('Airavatesvara Temple')">Accommodation</button>
+                </div>
+            </div>
+        
+            <div class="temple" id="temple34">
+                <img src="mahamaham_tank.jpg" alt="Mahamaham Tank">
+                <h3>Mahamaham Tank</h3>
+                <p><strong>Location:</strong> Kumbakonam, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A sacred tank where pilgrims take holy dips during the Mahamaham festival.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Mahamaham Tank')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Mahamaham Tank', 'Kumbakonam, Tamil Nadu, India', 'A sacred site for pilgrims during Mahamaham.')">Share</button>
+                    <button class="button" onclick="locateHotels('Mahamaham Tank')">Accommodation</button>
+                </div>
+            </div>
+        
+            <div class="temple" id="temple35">
+                <img src="ramaswamy_temple.jpg" alt="Ramaswamy Temple">
+                <h3>Ramaswamy Temple</h3>
+                <p><strong>Location:</strong> Kumbakonam, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A temple dedicated to Lord Rama, featuring beautiful murals depicting scenes from the Ramayana.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Ramaswamy Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Ramaswamy Temple', 'Kumbakonam, Tamil Nadu, India', 'A serene temple with Ramayana murals.')">Share</button>
+                    <button class="button" onclick="locateHotels('Ramaswamy Temple')">Accommodation</button>
+                </div>
+            </div>
+        
+            <div class="temple" id="temple36">
+                <img src="chakrapani_temple.jpg" alt="Chakrapani Temple">
+                <h3>Chakrapani Temple</h3>
+                <p><strong>Location:</strong> Kumbakonam, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A unique temple dedicated to Lord Vishnu's discus, the Sudarshana Chakra.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Chakrapani Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Chakrapani Temple', 'Kumbakonam, Tamil Nadu, India', 'A temple devoted to Sudarshana Chakra.')">Share</button>
+                    <button class="button" onclick="locateHotels('Chakrapani Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple37">
+    <img src="alangudi_guru_temple.jpg" alt="Alangudi Guru Temple">
+    <h3>Alangudi Guru Temple (Jupiter Temple)</h3>
+    <p><strong>Location:</strong> Alangudi, Tamil Nadu, India</p>
+    <p><strong>Historical Significance:</strong> A Navagraha temple dedicated to Lord Guru (Jupiter), revered for blessings of knowledge and wisdom.</p>
+    <div class="button-container">
+        <button class="button" onclick="locateTemple('Alangudi Guru Temple')">Locate Temple</button>
+        <button class="button" onclick="shareTemple('Alangudi Guru Temple', 'Alangudi, Tamil Nadu, India', 'A Navagraha temple for Jupiter worship.')">Share</button>
+        <button class="button" onclick="locateHotels('Alangudi Guru Temple')">Accommodation</button>
+    </div>
+            </div>
+
+            <div class="temple" id="temple38">
+    <img src="thirunallar_saneeswaran.jpg" alt="Thirunallar Saneeswaran Temple">
+    <h3>Thirunallar Saneeswaran Temple (Saturn Temple)</h3>
+    <p><strong>Location:</strong> Thirunallar, Tamil Nadu, India</p>
+    <p><strong>Historical Significance:</strong> A Navagraha temple dedicated to Lord Sani (Saturn), known for overcoming hardships and bad karma.</p>
+    <div class="button-container">
+        <button class="button" onclick="locateTemple('Thirunallar Saneeswaran Temple')">Locate Temple</button>
+        <button class="button" onclick="shareTemple('Thirunallar Saneeswaran Temple', 'Thirunallar, Tamil Nadu, India', 'A temple devoted to Saturn for divine grace.')">Share</button>
+        <button class="button" onclick="locateHotels('Thirunallar Saneeswaran Temple')">Accommodation</button>
+    </div>
+            </div>
+
+            <div class="temple" id="temple39">
+    <img src="vaitheeswaran_koil.jpg" alt="Vaitheeswaran Koil">
+    <h3>Vaitheeswaran Koil (Mars Temple)</h3>
+    <p><strong>Location:</strong> Vaitheeswaran, Tamil Nadu, India</p>
+    <p><strong>Historical Significance:</strong> A Navagraha temple dedicated to Mars (Angaraka), popular for its healing properties and prayers for good health.</p>
+    <div class="button-container">
+        <button class="button" onclick="locateTemple('Vaitheeswaran Koil')">Locate Temple</button>
+        <button class="button" onclick="shareTemple('Vaitheeswaran Koil', 'Vaitheeswaran, Tamil Nadu, India', 'A temple for Mars associated with health and healing.')">Share</button>
+        <button class="button" onclick="locateHotels('Vaitheeswaran Koil')">Accommodation</button>
+    </div>
+            </div>
+
+            <div class="temple" id="temple40">
+    <img src="keezhaperumpallam_kethu.jpg" alt="Keezhaperumpallam Kethu Temple">
+    <h3>Keezhaperumpallam Kethu Temple</h3>
+    <p><strong>Location:</strong> Keezhaperumpallam, Tamil Nadu, India</p>
+    <p><strong>Historical Significance:</strong> A Navagraha temple dedicated to Lord Kethu, known for removing negative effects and offering spiritual progress.</p>
+    <div class="button-container">
+        <button class="button" onclick="locateTemple('Keezhaperumpallam Kethu Temple')">Locate Temple</button>
+        <button class="button" onclick="shareTemple('Keezhaperumpallam Kethu Temple', 'Keezhaperumpallam, Tamil Nadu, India', 'A Navagraha temple for Kethu worship.')">Share</button>
+        <button class="button" onclick="locateHotels('Keezhaperumpallam Kethu Temple')">Accommodation</button>
+    </div>
+            </div>
+
+            <div class="temple" id="temple41">
+    <img src="thirumanancheri_temple.jpg" alt="Thirumanancheri Temple">
+    <h3>Thirumanancheri Temple (Marriage Blessing Temple)</h3>
+    <p><strong>Location:</strong> Thirumanancheri, Tamil Nadu, India</p>
+    <p><strong>Historical Significance:</strong> A temple dedicated to Lord Shiva and Goddess Parvati, visited by devotees seeking blessings for marriage.</p>
+    <div class="button-container">
+        <button class="button" onclick="locateTemple('Thirumanancheri Temple')">Locate Temple</button>
+        <button class="button" onclick="shareTemple('Thirumanancheri Temple', 'Thirumanancheri, Tamil Nadu, India', 'A sacred site for marriage blessings.')">Share</button>
+        <button class="button" onclick="locateHotels('Thirumanancheri Temple')">Accommodation</button>
+    </div>
+            </div>
+
+            <div class="temple" id="temple42">
+    <img src="thiruvalanchuzhi_swetha_vinayagar.jpg" alt="Thiruvalanchuzhi Swetha Vinayagar Temple">
+    <h3>Thiruvalanchuzhi Swetha Vinayagar Temple</h3>
+    <p><strong>Location:</strong> Thiruvalanchuzhi, Tamil Nadu, India</p>
+    <p><strong>Historical Significance:</strong> Famous for its white Ganesha idol made of sea foam, this temple holds great architectural and spiritual importance.</p>
+    <div class="button-container">
+        <button class="button" onclick="locateTemple('Thiruvalanchuzhi Swetha Vinayagar Temple')">Locate Temple</button>
+        <button class="button" onclick="shareTemple('Thiruvalanchuzhi Swetha Vinayagar Temple', 'Thiruvalanchuzhi, Tamil Nadu, India', 'A unique temple with a white Ganesha idol.')">Share</button>
+        <button class="button" onclick="locateHotels('Thiruvalanchuzhi Swetha Vinayagar Temple')">Accommodation</button>
+    </div>
+            </div>
+
+            <div class="temple" id="temple43">
+                <img src="thirubuvanam_kampahareswarar.jpg" alt="Thirubuvanam Kampahareswarar Temple">
+                <h3>Thirubuvanam Kampahareswarar Temple</h3>
+                <p><strong>Location:</strong> Thirubuvanam, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> Dedicated to Lord Shiva, this temple is known for its intricate architecture and religious significance.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Thirubuvanam Kampahareswarar Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Thirubuvanam Kampahareswarar Temple', 'Thirubuvanam, Tamil Nadu, India', 'A temple renowned for its architectural marvels.')">Share</button>
+                    <button class="button" onclick="locateHotels('Thirubuvanam Kampahareswarar Temple')">Accommodation</button>
+                </div>
+            </div>
+
+            <div class="temple" id="temple44">
+                <img src="suriyanar_koil.jpg" alt="Suriyanar Koil">
+                <h3>Suriyanar Koil (Sun Temple)</h3>
+                <p><strong>Location:</strong> Suriyanar Koil, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A Navagraha temple dedicated to the Sun God, sought for blessings of health, wealth, and prosperity.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Suriyanar Koil')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Suriyanar Koil', 'Suriyanar Koil, Tamil Nadu, India', 'A Navagraha temple for the Sun God.')">Share</button>
+                    <button class="button" onclick="locateHotels('Suriyanar Koil')">Accommodation</button>
+                </div>
+            </div>
+            
+            <div class="temple" id="temple45">
+                <img src="thingalur_chandran_temple.jpg" alt="Thingalur Chandran Temple">
+                <h3>Thingalur Chandran Temple (Moon Temple)</h3>
+                <p><strong>Location:</strong> Thingalur, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A Navagraha temple dedicated to the Moon God, known for improving mental peace and emotional stability.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Thingalur Chandran Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Thingalur Chandran Temple', 'Thingalur, Tamil Nadu, India', 'A temple dedicated to the Moon God for emotional stability.')">Share</button>
+                    <button class="button" onclick="locateHotels('Thingalur Chandran Temple')">Accommodation</button>
+                </div>
+            </div>
+            
+            <div class="temple" id="temple46">
+                <img src="kanjanur_sukran_temple.jpg" alt="Kanjanur Sukran Temple">
+                <h3>Kanjanur Sukran Temple (Venus Temple)</h3>
+                <p><strong>Location:</strong> Kanjanur, Tamil Nadu, India</p>
+                <p><strong>Historical Significance:</strong> A Navagraha temple devoted to Venus (Sukra), believed to grant wealth, love, and creativity.</p>
+                <div class="button-container">
+                    <button class="button" onclick="locateTemple('Kanjanur Sukran Temple')">Locate Temple</button>
+                    <button class="button" onclick="shareTemple('Kanjanur Sukran Temple', 'Kanjanur, Tamil Nadu, India', 'A Navagraha temple for Venus worship.')">Share</button>
+                    <button class="button" onclick="locateHotels('Kanjanur Sukran Temple')">Accommodation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ <script>
+   function showMainPage() {
+    const homePageContent = document.getElementById('homePageContent');
+    const templeList = document.getElementById('templeList');
+    const lookoutTempleButton = document.getElementById('lookoutTempleButton');
+    if (homePageContent) {
+        homePageContent.style.display = 'block';
+        homePageContent.setAttribute('aria-hidden', 'false'); 
+    }
+    if (templeList) {
+        templeList.style.display = 'none';
+        templeList.setAttribute('aria-hidden', 'true');
+    }
+    if (lookoutTempleButton) {
+        lookoutTempleButton.style.display = 'block';
+        lookoutTempleButton.setAttribute('aria-hidden', 'false'); 
+    }
+}
+   function Lookouttemples() {
+    const homePageContent = document.getElementById('homePageContent');
+    const templeList = document.getElementById('templeList');
+    if (templeList) {
+        templeList.style.display = 'flex';
+        templeList.setAttribute('aria-hidden', 'false');
+    }
+    if (homePageContent) {
+        homePageContent.style.display = 'none';
+        homePageContent.setAttribute('aria-hidden', 'true');
+    }
+}
+   function searchTemple() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const temples = document.querySelectorAll('.temple');
+            temples.forEach(temple => {
+                const templeName = temple.querySelector('h3').textContent.toLowerCase();
+                temple.style.display = templeName.includes(query) ? 'block' : 'none';
+            });
+            if (!found) {
+                alert(`No temples found related to: ${query}`);
+            }
+        }
+   function locateTemple(templeName) {
+            alert(`Locating ${templeName} on the map.`);
+            window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(templeName)}`);
+        }
+   function shareTemple(name, location, details) {
+    const message = `Check out this temple: ${name} located in ${location}. Details: ${details}`;
+    const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappURL, '_blank');
+}
+
+function bookDarshan(templeName) {
+            alert(`Booking darshan for ${templeName}. Redirecting to payment gateway.`);
+            window.open('https://gpay.app.goo.gl/');
+            alert('You will receive a confirmation email shortly.');
+        }
+    
+function locateHotels(templeName) {
+            alert(`Locating hotels and rooms near ${templeName}.`);
+            window.open(`https://www.google.com/maps/search/hotels+near+${encodeURIComponent(templeName)}`);
+        }
+        function viewAllTemples() {
+            const temples = document.querySelectorAll('.temple');
+            temples.forEach(temple => {
+                temple.style.display = 'block'; // Show all temples
+            });
+        }
+function bookRide() {
+    window.location.href = "https://www.olacabs.com";
+}
+
+function showTempleContainers() {
+    // Assuming 'templeContainers' is the ID of the element that contains the temples
+    document.getElementById('templeContainers').style.display = 'block';
+    // Optionally hide other elements if needed
+}
+const apiKey = '1788f730fa0c34df3d730b8ede8e2899';
+const templeLocation = 'coimbatore'; // Replace with the desired location
+
+async function fetchWeather() {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${templeLocation}&appid=${apiKey}&units=metric`);
+    const data = await response.json();
+
+    const weatherInfo = `
+        Location: ${data.name}<br>
+        Temperature: ${data.main.temp}°C<br>
+        Weather: ${data.weather[0].description}
+    `;
+
+    document.getElementById('weatherInfo').innerHTML = weatherInfo;
+}
+
+fetchWeather();
+
+  </script>
+    
